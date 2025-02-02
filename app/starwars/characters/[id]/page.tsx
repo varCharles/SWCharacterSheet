@@ -5,7 +5,7 @@ import { promises as fs } from "fs";
 
 const CharacterSheetPage = async () => {
   const file = await fs.readFile(
-    process.cwd() + "/app/characters/character1.json",
+    process.cwd() + "/public/characters/character1.json",
     "utf8"
   );
 
