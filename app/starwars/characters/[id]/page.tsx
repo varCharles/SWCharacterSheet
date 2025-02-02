@@ -1,12 +1,10 @@
 import { SWCharacterSheet } from "@/components/SWCharacterSheet";
 import { DrawerProvider } from "@/contexts/DrawerContext";
 import { ModalProvider } from "@/contexts/ModalContext";
-import { promises as fs } from "fs";
+import { charactersList } from "@/utils/characterlist";
 
 const CharacterSheetPage = async () => {
-  const file = await fs.readFile("/characters/character1.json", "utf8");
-
-  const characterData = await JSON.parse(file);
+  const characterData = charactersList()[0];
 
   return characterData ? (
     <ModalProvider>
