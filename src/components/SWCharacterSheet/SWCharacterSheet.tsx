@@ -17,7 +17,7 @@ export const SWCharacterSheet = ({ characterData }) => {
 
   const attributes = useStore((state) => state.attributes);
   const attack = useStore((state) => state.attack);
-  const modifiers = useStore((state) => state.modifiers);
+  // const modifiers = useStore((state) => state.modifiers);
 
   return (
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">

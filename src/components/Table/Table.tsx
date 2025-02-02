@@ -9,10 +9,6 @@ export const Table = ({ tableData }) => {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold text-gray-900">Equipment</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title,
-            email and role.
-          </p>
         </div>
       </div>
       <div className="mt-8 flow-root">
@@ -51,8 +47,7 @@ export const TableHeader = ({ data }) => {
   );
 };
 
-const formatLookupValue = (id) => {
-  const skills = useStore((state) => state.skillsMap);
+const formatLookupValue = (id, skills) => {
   const { baseValue, value, name } = skills[id];
   const dice = baseValue + value;
   return (
@@ -70,10 +65,10 @@ const formatDamageValue = (value, name) => {
   );
 };
 
-const formatValue = (column, row) => {
+const formatValue = (column, row, skills) => {
   switch (column) {
     case "lookup":
-      return formatLookupValue(row[column]);
+      return formatLookupValue(row[column], skills);
     case "damage":
       return formatDamageValue(row[column], row.name);
     default:
@@ -82,10 +77,12 @@ const formatValue = (column, row) => {
 };
 
 export const SWCharacterSheetRow = ({ row }) => {
+  const skills = useStore((state) => state.skillsMap);
+
   return (
     <tr className="even:bg-gray-800">
       {Object.keys(row).map((column) => {
-        const value = formatValue(column, row);
+        const value = formatValue(column, row, skills);
         return (
           <td
             key={row[column]}

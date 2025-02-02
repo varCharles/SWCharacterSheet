@@ -15,7 +15,7 @@ export const Attribute = ({ attribute }) => {
       </span>
     );
   };
-  const { id, name, baseValue, pips, skills } = attribute;
+  const { name, baseValue, pips, skills } = attribute;
   return (
     <li>
       <h3 className="text-base capitalize font-semibold text-white ">

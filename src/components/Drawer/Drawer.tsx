@@ -11,7 +11,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ActionsList } from "../ActionsList";
 
 export const Drawer = () => {
-  const { isDrawerOpen, closeDrawer, drawerContent } = useDrawer();
+  const { isDrawerOpen, closeDrawer } = useDrawer();
 
   return (
     <Dialog open={isDrawerOpen} onClose={closeDrawer} className="relative z-10">
