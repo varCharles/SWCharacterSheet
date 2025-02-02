@@ -4,7 +4,7 @@ import { ModalProvider } from "@/contexts/ModalContext";
 import { promises as fs } from "fs";
 
 const CharacterSheetPage = async () => {
-  const file = await fs.readFile("public/characters/character1.json", "utf8");
+  const file = await fs.readFile("/characters/character1.json", "utf8");
 
   const characterData = await JSON.parse(file);
 
