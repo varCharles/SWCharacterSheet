@@ -9,9 +9,25 @@ import { ActionItem } from "../ActionItem";
 
 export const ActionsList = () => {
   const actionOptions = useStore((state) => state.actions);
+  const modifiers = useStore((state) => state.modifiers);
   const [actionList, setActionList] = useState([]);
   const [selectedAction, setSelectedAction] = useState(actionOptions[0]);
-  const modifiers = actionList.length === 0 ? 0 : actionList.length - 1;
+
+  const stunned = modifiers.stunned ? 1 : 0;
+  const wounded = modifiers.wounded ? 1 : 0;
+  const wounded2x = modifiers.wounded2x ? 1 : 0;
+  const localModifiers = {
+    actions: 0,
+    stun: stunned,
+    wound: wounded + wounded2x,
+  };
+  localModifiers.actions = actionList.length === 0 ? 0 : actionList.length - 1;
+  const actionPenalty = Object.values(localModifiers).reduce(
+    (sum, value) => sum + value,
+    0
+  );
+
+  // const modifiers.actions = actionList.length === 0 ? 0 : actionList.length - 1;
 
   const addAction = ({ id, name, dice }) => {
     const uid = crypto.randomUUID();
@@ -26,7 +42,7 @@ export const ActionsList = () => {
   const rollActions = () => {
     const actionClone = [...actionList];
     actionClone.forEach((action) => {
-      const roll = rollSWD6Dice(action.dice - modifiers);
+      const roll = rollSWD6Dice(action.dice - actionPenalty);
       action.roll = roll;
     });
     setActionList(actionClone);
@@ -53,21 +69,38 @@ export const ActionsList = () => {
           </button>
         </span>
       </div>
-      <div className="mx-auto  mt-4 max-w-7xl">
-        <div className="text-center grid grid-cols-3 gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto mt-4 max-w-7xl">
+        <div className="text-center grid grid-cols-5 gap-px bg-white/5">
           <div className="bg-gray-900 px-4 py-3 sm:px-6 lg:px-8">
             <p className="text-sm/6 font-medium text-gray-400">actions</p>
             <p className="mt-2  items-baseline gap-x-2">
               <span className="text-2xl font-semibold tracking-tight text-white">
-                {actionList.length}
+                {localModifiers.actions}
+              </span>
+            </p>
+          </div>
+
+          <div className="bg-gray-900 px-4 py-3 sm:px-6 lg:px-8">
+            <p className="text-sm/6 font-medium text-gray-400">stun</p>
+            <p className="mt-2  items-baseline gap-x-2">
+              <span className="text-2xl font-semibold tracking-tight text-white">
+                {localModifiers.stun}
               </span>
             </p>
           </div>
           <div className="bg-gray-900 px-4 py-3 sm:px-6 lg:px-8">
-            <p className="text-sm/6 font-medium text-gray-400">penalty</p>
+            <p className="text-sm/6 font-medium text-gray-400">wound</p>
             <p className="mt-2  items-baseline gap-x-2">
               <span className="text-2xl font-semibold tracking-tight text-white">
-                {modifiers}
+                {localModifiers.wound}
+              </span>
+            </p>
+          </div>
+          <div className="bg-gray-900 px-4 py-3 sm:px-6 lg:px-8">
+            <p className="text-sm/6 font-medium text-gray-400">total</p>
+            <p className="mt-2  items-baseline gap-x-2">
+              <span className="text-2xl font-semibold tracking-tight text-white">
+                {actionPenalty}
               </span>
             </p>
           </div>
@@ -98,7 +131,7 @@ export const ActionsList = () => {
                 key={action.uid}
                 action={action}
                 onDelete={onDelete}
-                modifiers={modifiers}
+                modifiers={actionPenalty}
               />
             );
           })}

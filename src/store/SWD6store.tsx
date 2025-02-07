@@ -30,16 +30,18 @@ type Attack = {
   special: string;
 };
 
-type Modifier = {
-  name: string;
-  effect: number;
+type Modifiers = {
+  stunned: boolean;
+  wounded: boolean;
+  wounded2x: boolean;
 };
 
 type State = {
   attributes: Attribute[];
   attack: Attack[];
-  modifiers: Modifier[];
+  modifiers: Modifiers[];
   actions: Action[];
+  updateWounded: (value: boolean) => void;
   addModifier: (modifier: Modifier) => void;
   removeModifier: (modifierName: string) => void;
   addAttack: (attack: Attack) => void;
@@ -49,7 +51,7 @@ type State = {
 export const useStore = create<State>((set) => ({
   attributes: [],
   attack: [],
-  modifiers: [],
+  modifiers: { stunned: false, wounded: true, wounded2x: false },
   actions: [],
   skillsMap: {},
 
@@ -59,8 +61,9 @@ export const useStore = create<State>((set) => ({
     const actions = [];
 
     data.attributes?.forEach((attribute: Attribute) => {
-      const { name, baseValue } = attribute;
+      const { id, name, baseValue } = attribute;
       actions.push({ name, dice: baseValue });
+      skillsMap[id] = attribute;
       attribute.skills.forEach((skill) => {
         const { id, name, value, baseValue } = skill;
         const dice = value + baseValue;
@@ -74,6 +77,7 @@ export const useStore = create<State>((set) => ({
       })
     );
 
+    console.log("setting ");
     set((state) => ({
       ...state,
       ...data,
@@ -84,12 +88,12 @@ export const useStore = create<State>((set) => ({
 
   getSkillById: (id) => set((state) => state.skillsMap[id]), // Lookup from the flat map
 
-  addModifier: (modifier) =>
-    set((state) => ({ modifiers: [...state.modifiers, modifier] })),
-
-  removeModifier: (modifierName) =>
+  toggleModifier: (key) =>
     set((state) => ({
-      modifiers: state.modifiers.filter((mod) => mod.name !== modifierName),
+      modifiers: {
+        ...state.modifiers,
+        [key]: !state.modifiers[key], // Toggle the boolean value
+      },
     })),
 
   addAttack: (attack) =>
