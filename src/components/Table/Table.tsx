@@ -48,8 +48,17 @@ export const TableHeader = ({ data }) => {
 };
 
 const formatLookupValue = (id, skills) => {
+  // const dice = baseValue + value;
+  const modifiers = useStore((state) => state.modifiers);
+  const stunned = modifiers.stunned ? 1 : 0;
+  const wounded = modifiers.wounded ? 1 : 0;
+  const wounded2x = modifiers.wounded2x ? 1 : 0;
   const { baseValue, value, name } = skills[id];
-  const dice = baseValue + value;
+  const diceNum = value ? baseValue + value : baseValue;
+  const penalty = stunned + wounded + wounded2x;
+  const total = diceNum - penalty;
+  const dice = total < 1 ? 0 : total;
+
   return (
     <SWD6DiceRoller dice={dice} stat={name}>
       {dice}D

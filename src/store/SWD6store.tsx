@@ -51,7 +51,7 @@ type State = {
 export const useStore = create<State>((set) => ({
   attributes: [],
   attack: [],
-  modifiers: { stunned: false, wounded: true, wounded2x: false },
+  modifiers: { stunned: false, wounded: false, wounded2x: false },
   actions: [],
   skillsMap: {},
 
