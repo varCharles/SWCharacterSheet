@@ -47,9 +47,8 @@ export const TableHeader = ({ data }) => {
   );
 };
 
-const formatLookupValue = (id, skills) => {
+const formatLookupValue = (id, skills, modifiers) => {
   // const dice = baseValue + value;
-  const modifiers = useStore((state) => state.modifiers);
   const stunned = modifiers.stunned ? 1 : 0;
   const wounded = modifiers.wounded ? 1 : 0;
   const wounded2x = modifiers.wounded2x ? 1 : 0;
@@ -74,10 +73,10 @@ const formatDamageValue = (value, name) => {
   );
 };
 
-const formatValue = (column, row, skills) => {
+const formatValue = (column, row, skills, modifiers) => {
   switch (column) {
     case "lookup":
-      return formatLookupValue(row[column], skills);
+      return formatLookupValue(row[column], skills, modifiers);
     case "damage":
       return formatDamageValue(row[column], row.name);
     default:
@@ -87,11 +86,12 @@ const formatValue = (column, row, skills) => {
 
 export const SWCharacterSheetRow = ({ row }) => {
   const skills = useStore((state) => state.skillsMap);
+  const modifiers = useStore((state) => state.modifiers);
 
   return (
     <tr className="even:bg-gray-800">
       {Object.keys(row).map((column) => {
-        const value = formatValue(column, row, skills);
+        const value = formatValue(column, row, skills, modifiers);
         return (
           <td
             key={row[column]}
