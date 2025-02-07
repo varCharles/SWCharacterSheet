@@ -28,20 +28,19 @@ export const SWCharacterSheet = ({ characterData }) => {
         <p className="mt-1 max-w-2xl text-base text-gray-400">
           {characterData.template}
         </p>
-        <div className="flex items-center">
+        <div className="flex items-start">
           {/* <p className="text-xl font-semibold text-gray-100">Actions</p> */}
-          <WoundedUI />
-          <span className="mt-1 mx-9 items-center text-sm text-gray-100">
-            <InitiativeRoll />
-          </span>
           <button
             type="button"
             onClick={() => openDrawer()}
             className="rounded-full bg-gray-800 px-3 py-1 text-white shadow-sm ring-1 ring-inset ring-gray-600 hover:bg-gray-600"
           >
             Action Planner
-            {/* <PlusIcon aria-hidden="true" className="size-5" /> */}
           </button>
+          <span className="mt-1 mx-9 items-center text-sm text-gray-100">
+            <InitiativeRoll />
+          </span>
+          <WoundedUI />
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="col-span-2">

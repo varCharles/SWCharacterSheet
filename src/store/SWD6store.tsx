@@ -34,6 +34,8 @@ type Modifiers = {
   stunned: boolean;
   wounded: boolean;
   wounded2x: boolean;
+  fatigue: boolean;
+  fatigue2x: boolean;
 };
 
 type State = {
@@ -51,14 +53,20 @@ type State = {
 export const useStore = create<State>((set) => ({
   attributes: [],
   attack: [],
-  modifiers: { stunned: false, wounded: false, wounded2x: false },
+  modifiers: {
+    stunned: false,
+    wounded: false,
+    wounded2x: false,
+    fatigue: false,
+    fatigue2x: false,
+  },
   actions: [],
   skillsMap: {},
 
   setInitialState: (data) => {
     // Build a flat skills map
     const skillsMap: Record<string, Skill> = {};
-    const actions = [];
+    const actions: Array<Action> = [];
 
     data.attributes?.forEach((attribute: Attribute) => {
       const { id, name, baseValue } = attribute;

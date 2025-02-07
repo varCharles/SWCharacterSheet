@@ -16,10 +16,13 @@ export const ActionsList = () => {
   const stunned = modifiers.stunned ? 1 : 0;
   const wounded = modifiers.wounded ? 1 : 0;
   const wounded2x = modifiers.wounded2x ? 1 : 0;
+  const fatigue = modifiers.fatigue ? 1 : 0;
+  const fatigue2x = modifiers.fatigue2x ? 1 : 0;
   const localModifiers = {
     actions: 0,
     stun: stunned,
     wound: wounded + wounded2x,
+    fatigue: fatigue + fatigue2x,
   };
   localModifiers.actions = actionList.length === 0 ? 0 : actionList.length - 1;
   const actionPenalty = Object.values(localModifiers).reduce(
@@ -70,7 +73,7 @@ export const ActionsList = () => {
         </span>
       </div>
       <div className="mx-auto mt-4 max-w-7xl">
-        <div className="text-center grid grid-cols-5 gap-px bg-white/5">
+        <div className="text-center grid grid-cols-6 gap-px bg-white/5">
           <div className="bg-gray-900 px-4 py-3 sm:px-6 lg:px-8">
             <p className="text-sm/6 font-medium text-gray-400">actions</p>
             <p className="mt-2  items-baseline gap-x-2">
@@ -93,6 +96,14 @@ export const ActionsList = () => {
             <p className="mt-2  items-baseline gap-x-2">
               <span className="text-2xl font-semibold tracking-tight text-white">
                 {localModifiers.wound}
+              </span>
+            </p>
+          </div>
+          <div className="bg-gray-900 px-4 py-3 sm:px-6 lg:px-8">
+            <p className="text-sm/6 font-medium text-gray-400">fatigue</p>
+            <p className="mt-2  items-baseline gap-x-2">
+              <span className="text-2xl font-semibold tracking-tight text-white">
+                {localModifiers.fatigue}
               </span>
             </p>
           </div>

@@ -9,10 +9,13 @@ export const SWD6DiceModifier = ({ target }) => {
   const stunned = modifiers.stunned ? 1 : 0;
   const wounded = modifiers.wounded ? 1 : 0;
   const wounded2x = modifiers.wounded2x ? 1 : 0;
+  const fatigue = modifiers.fatigue ? 1 : 0;
+  const fatigue2x = modifiers.fatigue2x ? 1 : 0;
+
   if (!skills[target]) return <></>;
   const { baseValue, value, name } = skills[target];
   const diceNum = value ? baseValue + value : baseValue;
-  const penalty = stunned + wounded + wounded2x;
+  const penalty = stunned + wounded + wounded2x + fatigue + fatigue2x;
   const total = diceNum - penalty;
   const dice = total < 1 ? 0 : total;
 

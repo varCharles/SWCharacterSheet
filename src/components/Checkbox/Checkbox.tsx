@@ -72,6 +72,22 @@ export const WoundedUI = () => {
           checked={modifiers.wounded2x}
         />
       </div>
+      <div className="text-sm/6 flex">
+        <label htmlFor="comments" className="font-medium text-gray-100 pr-2">
+          fatigue
+        </label>
+        <span></span>
+        <Checkbox
+          id="fatigue"
+          onChange={onChange}
+          checked={modifiers.fatigue}
+        />
+        <Checkbox
+          id="fatigue2x"
+          onChange={onChange}
+          checked={modifiers.fatigue2x}
+        />
+      </div>
     </div>
   );
 };

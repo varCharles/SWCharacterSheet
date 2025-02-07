@@ -262,7 +262,7 @@ export const charactersList = () => {
           ],
         },
         {
-          id: 4,
+          id: "sk4",
           name: "perception",
           baseValue: 4,
           pips: 0,
