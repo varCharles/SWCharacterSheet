@@ -14,7 +14,6 @@ import { useState } from "react";
 export const ACComboBox = ({ onChange, selectedAction }) => {
   const actions = useStore((state) => state.actions);
 
-  // console.log(actions);
   const [query, setQuery] = useState("");
   // const [selectedAction, setSelectedAction] = useState(null);
 

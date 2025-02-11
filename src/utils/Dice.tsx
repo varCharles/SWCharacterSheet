@@ -1,4 +1,4 @@
-export const rollSWD6Dice = (numDice: number) => {
+export const rollSWD6WildDice = (numDice: number) => {
   if (numDice < 1) throw new Error("You must roll at least 1 die.");
 
   let total = 0;
@@ -37,4 +37,23 @@ export const rollSWD6Dice = (numDice: number) => {
   console.log("Dice Rolls:", rolls);
   console.log("Wild Die Breakdown:", wildDieBreakdown);
   return { total, rolls, wildDieBreakdown };
+};
+
+export const rollSWD6Dice = (numDice: number, pips: number) => {
+  if (numDice < 1) throw new Error("You must roll at least 1 die.");
+
+  let total = 0;
+  const rolls = [];
+
+  for (let i = 0; i < numDice; i++) {
+    const roll = Math.floor(Math.random() * 6) + 1;
+    total += roll;
+    rolls.push(roll);
+  }
+
+  if (pips > 0) {
+    total += pips;
+    rolls.push(pips);
+  }
+  return { total, rolls };
 };

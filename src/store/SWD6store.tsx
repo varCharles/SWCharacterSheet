@@ -10,6 +10,7 @@ type Skill = {
   name: string;
   value: number;
   baseValue: number;
+  pips: number;
 };
 
 type Attribute = {
@@ -69,23 +70,24 @@ export const useStore = create<State>((set) => ({
     const actions: Array<Action> = [];
 
     data.attributes?.forEach((attribute: Attribute) => {
-      const { id, name, baseValue } = attribute;
-      actions.push({ name, dice: baseValue });
+      const { id, name, baseValue, pips } = attribute;
+      actions.push({ name, dice: baseValue, pips });
       skillsMap[id] = attribute;
-      attribute.skills.forEach((skill) => {
-        const { id, name, value, baseValue } = skill;
-        const dice = value + baseValue;
-        actions.push({ id, name, dice });
-      });
+      // attribute.skills.forEach((skill) => {
+      //   skill.pips = attribute.pips;
+      //   const { id, name, value, baseValue } = skill;
+      //   const dice = value + baseValue;
+      //   actions.push({ id, name, dice, pips });
+      // });
     });
 
     data.attributes?.forEach((attribute: Attribute) =>
       attribute.skills.forEach((skill) => {
+        skill.pips = attribute.pips;
         skillsMap[skill.id] = skill;
       })
     );
 
-    console.log("setting ");
     set((state) => ({
       ...state,
       ...data,
